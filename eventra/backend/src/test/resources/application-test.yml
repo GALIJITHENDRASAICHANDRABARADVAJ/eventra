@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: ${TEST_DATABASE_URL:jdbc:postgresql://localhost:5432/eventra_test}
+    username: ${TEST_DATABASE_USERNAME:eventra}
+    password: ${TEST_DATABASE_PASSWORD:eventra}
+  flyway:
+    locations: classpath:db/migration,classpath:db/demo
+    clean-disabled: false
+eventra:
+  scheduling:
+    enabled: false
+  rate-limit:
+    enabled: false
+  jwt:
+    secret: test-secret-test-secret-test-secret-test-secret-0123456789
+  cookies:
+    secure: false
+  payments:
+    mock-enabled: true
+  qr:
+    secret: test-qr-secret
+  seed:
+    demo-data: false
+logging:
+  level:
+    com.eventra: INFO
+    org.hibernate.SQL: WARN
