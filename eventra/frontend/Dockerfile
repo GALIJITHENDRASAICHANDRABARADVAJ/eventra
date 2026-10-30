@@ -22,4 +22,4 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 USER app
 EXPOSE 3000
-CMD ["npx", "next", "start", "-p", "3000"]
+CMD ["sh", "-c", "exec npx next start -p ${PORT:-3000}"]
