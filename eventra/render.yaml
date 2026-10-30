@@ -6,7 +6,7 @@ services:
     region: singapore
     dockerfilePath: ./eventra/backend/Dockerfile
     dockerContext: ./eventra/backend
-    healthCheckPath: /actuator/health/db
+    healthCheckPath: /actuator/health
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
@@ -42,6 +42,8 @@ services:
         value: "false"
       - key: EMAIL_PROVIDER
         value: console
+      - key: MANAGEMENT_HEALTH_MAIL_ENABLED
+        value: "false"
       - key: JAVA_OPTS
         value: "-XX:MaxRAMPercentage=65 -XX:InitialRAMPercentage=20 -XX:+UseSerialGC"
 
