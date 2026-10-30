@@ -1,0 +1,74 @@
+services:
+  - type: web
+    name: eventra-jithendra-api-2026
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./eventra/backend/Dockerfile
+    dockerContext: ./eventra/backend
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: PORT
+        value: "10000"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: eventra-jithendra-db-2026
+          property: connectionString
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: eventra-jithendra-db-2026
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: eventra-jithendra-db-2026
+          property: password
+      - key: DATABASE_POOL_SIZE
+        value: "5"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: QR_SIGNING_SECRET
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: COOKIE_SAME_SITE
+        value: Lax
+      - key: FRONTEND_URL
+        value: https://eventra-jithendra-web-2026.onrender.com
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://eventra-jithendra-web-2026.onrender.com
+      - key: PAYMENTS_MOCK_ENABLED
+        value: "false"
+      - key: EMAIL_PROVIDER
+        value: console
+      - key: JAVA_OPTS
+        value: "-XX:MaxRAMPercentage=65 -XX:InitialRAMPercentage=20 -XX:+UseSerialGC"
+
+  - type: web
+    name: eventra-jithendra-web-2026
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./eventra/frontend/Dockerfile
+    dockerContext: ./eventra/frontend
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: NEXT_PUBLIC_API_URL
+        value: https://eventra-jithendra-api-2026.onrender.com
+      - key: NEXT_PUBLIC_APP_NAME
+        value: Eventra
+      - key: API_INTERNAL_URL
+        value: https://eventra-jithendra-api-2026.onrender.com
+      - key: NODE_ENV
+        value: production
+
+databases:
+  - name: eventra-jithendra-db-2026
+    region: singapore
+    plan: free
+    postgresMajorVersion: "16"
+    databaseName: eventra
+    user: eventra
