@@ -14,4 +14,4 @@ COPY --from=build /src/target/eventra-backend-*.jar app.jar
 USER app
 EXPOSE 8080
 ENV JAVA_OPTS="-XX:MaxRAMPercentage=75"
-ENTRYPOINT ["sh", "-c", "case \"${DATABASE_URL:-}\" in postgres://*|postgresql://*) export DATABASE_URL=\"jdbc:postgresql://${DATABASE_URL#*://}\";; esac; exec java $JAVA_OPTS -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "case \"${DATABASE_URL:-}\" in postgres://*|postgresql://*) export DATABASE_URL=\"jdbc:postgresql://${DATABASE_URL#*@}\";; esac; exec java $JAVA_OPTS -jar /app/app.jar"]
