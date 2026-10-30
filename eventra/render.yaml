@@ -6,7 +6,7 @@ services:
     region: singapore
     dockerfilePath: ./eventra/backend/Dockerfile
     dockerContext: ./eventra/backend
-    healthCheckPath: /actuator/health
+    healthCheckPath: /actuator/health/db
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
